@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pressed="clr-namespace:Pressed.Pressed;assembly=Pressed"
+             xmlns:pressed1="clr-namespace:Pressed;assembly=Pressed"
+             x:Class="Pressed.MainPage"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             BackgroundColor="{DynamicResource Background}">
+    <ContentPage.BindingContext>
+        <pressed1:MainPageModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Background">#e8ebee</Color>
+            <Color x:Key="Pressed">#f5f6f7</Color>
+            <Style TargetType="FlexLayout" x:Key="Flex">
+                <Setter Property="Wrap" Value="Wrap"/>
+                <Setter Property="Direction" Value="Row"/>
+                <Setter Property="Margin" Value="8"/>
+                <Setter Property="JustifyContent" Value="Start"/>
+                <Setter Property="AlignItems" Value="Start"/>
+                <Setter Property="AlignContent" Value="Start"/>
+                <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+            </Style>
+            <Style TargetType="Label" x:Key="TextStyle">
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="LineBreakMode" Value="WordWrap" />
+            </Style>
+            <Style TargetType="Grid" x:Key="Grid">
+                <Setter Property="Margin" Value="8" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="VerticalOptions" Value="StartAndExpand" />
+                <Setter Property="FlexLayout.Basis" Value="50%" />
+                <Setter Property="FlexLayout.AlignSelf" Value="Start" />
+            </Style>
+            <Style TargetType="Frame" x:Key="Touchable">
+                <Setter Property="CornerRadius" Value="2"/>
+                <Setter Property="HeightRequest" Value="200" />
+                <Setter Property="WidthRequest" Value="400" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="pressed:View.ObservesTouches" Value="True" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList x:Key="TouchStates">
+                        
+                        <VisualStateGroup x:Name="CommonStates">
+
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="White" />
+                                    <Setter Property="Scale" Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            
+                        </VisualStateGroup>
+                        
+                        <VisualStateGroup x:Name="PressedStates">
+                            
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Pressed}" />
+                                    <Setter Property="Scale" Value="0.9" />
+                                    <Setter Property="Rotation" Value="5"/>
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Released">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="White" />
+                                    <Setter Property="Scale" Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            
+                            <VisualState x:Name="Changed">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Pressed}" />
+                                    <Setter Property="Scale" Value="0.9" />
+                                    <Setter Property="Rotation" Value="5"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            
+                        </VisualStateGroup>
+                        
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <FlexLayout Style="{StaticResource Flex}">
+
+            <Grid Style="{StaticResource Grid}">
+                <Frame pressed:View.TouchEventCommand="{Binding TappedCommand}"
+                       pressed:View.TrackBoundaryChanges="True"
+                       Style="{StaticResource Touchable}">
+                    <Label Text="Welcome to Xamarin.Forms!" Style="{StaticResource TextStyle}" />
+                </Frame>
+            </Grid>
+
+            <Grid Style="{StaticResource Grid}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped"></TapGestureRecognizer>
+                </Grid.GestureRecognizers>
+                <Frame Style="{StaticResource Touchable}">
+                    <Label Text="Welcome to Xamarin.Forms!" Style="{StaticResource TextStyle}" />
+                </Frame>
+            </Grid>
+
+            <Grid Style="{StaticResource Grid}">
+                <Frame Style="{StaticResource Touchable}">
+                    <Label Text="Welcome to Xamarin.Forms!" Style="{StaticResource TextStyle}" />
+                </Frame>
+            </Grid>
+
+            <Grid Style="{StaticResource Grid}">
+                <Frame Style="{StaticResource Touchable}">
+                    <Label Text="Welcome to Xamarin.Forms!" Style="{StaticResource TextStyle}" />
+                </Frame>
+            </Grid>
+
+            <Grid Style="{StaticResource Grid}">
+                <Frame pressed:View.ObservesTouches="False"
+                       Style="{StaticResource Touchable}">
+                    <Label Style="{StaticResource TextStyle}">
+                        <Label.Text>
+                            Welcome to Xamarin.Forms!
+                            No Touch
+                        </Label.Text>
+                    </Label>
+                </Frame>
+            </Grid>
+
+        </FlexLayout>
+    </ScrollView>
+</ContentPage>
