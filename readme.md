@@ -43,6 +43,34 @@ public class TouchGestureRecognizer : BindableObject, IGestureRecognizer
 }
 ```
 
+New TouchState
+```csharp
+[Flags]
+public enum TouchState
+{
+    Entered = 1<<0,
+    Exited = 1<<2,
+    Cancelled = 1<<3,
+    Failed = 1<<4,
+    Changed = 1<<5,
+    Pressed = 1<<6, 
+    Released = 1<<7,
+    Hover = 1<<8,
+    MultiPressed = 1<<9
+}
+```
+
+New TouchEventArgs
+```csharp
+public class TouchEventArgs : EventArgs
+{   
+    public TouchState TouchState { get; }
+    public IReadOnlyList<Point> TouchPoints { get; }
+    public long Id { get; }
+    public bool IsInContact { get; }
+}
+```
+
 Additional States
 ```xml
 <VisualStateGroup x:Name="PressedStates">
