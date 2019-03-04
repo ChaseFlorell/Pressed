@@ -272,3 +272,4 @@ Thumbs.db
 **/Android/**/[Rr]esource.[Dd]esigner.cs
 **/Droid/**/[Rr]esource.[Dd]esigner.cs
 /AgExpert.Field/Data/Migrations/201901031756042_storage-treatment-table-amended.cs
+.idea/
