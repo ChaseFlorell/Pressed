@@ -22,13 +22,12 @@ namespace Pressed.iOS.Effects
         protected override void OnAttached()
         {
             if(!Element.Is(out _formsElement)) throw new InvalidOperationException("Can only attach Touch Effects to Views");
-            
-            var formsGestureRecognizer = (TouchGestureRecognizer)_formsElement.GestureRecognizers.First(x => x.Is<TouchGestureRecognizer>());
-            
-            _uiGestureRecognizer = new TouchRecognizer_Touch(_formsElement, UiView, formsGestureRecognizer);
+
+            _uiGestureRecognizer = new TouchRecognizer_Touch(_formsElement, UiView);
             
             UiView.UserInteractionEnabled = true;
             
+            // none of this has to do with Forms GestureRecognizers
             if(!(UiView.GestureRecognizers is null) && UiView.GestureRecognizers.Contains(_uiGestureRecognizer))
                 UiView.RemoveGestureRecognizer(_uiGestureRecognizer);
             

@@ -1,38 +1,35 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using CoreGraphics;
 using Foundation;
 using Pressed.Pressed;
+using Pressed.Pressed.Extensions;
 using UIKit;
 using Xamarin.Forms;
-using View = Xamarin.Forms.View;
 
 namespace Pressed.iOS.Effects
 {
     class TouchRecognizer_Touch : UIGestureRecognizer
     {
-        private readonly View _element; // Forms element for firing events
-        private readonly UIView _view; // iOS UIView 
-        private readonly TouchGestureRecognizer _touchEffect;
-        private bool _capture;
-
+        private readonly View _formsView; // Forms element for firing events
+        private readonly UIView _uiView; // iOS UIView 
         private static readonly Dictionary<UIView, TouchRecognizer_Touch> _viewDictionary = new Dictionary<UIView, TouchRecognizer_Touch>();
 
         private static readonly Dictionary<long, TouchRecognizer_Touch> _idToTouchDictionary = new Dictionary<long, TouchRecognizer_Touch>();
+        private bool _constrainToView;
 
-        public TouchRecognizer_Touch(View element, UIView view, TouchGestureRecognizer touchEffect)
+        public TouchRecognizer_Touch(View formsView, UIView uiView)
         {
-            _element = element;
-            _view = view;
-            _touchEffect = touchEffect;
+            _formsView = formsView;
+            _uiView = uiView;
 
-            _viewDictionary.Add(view, this);
+            _viewDictionary.Add(uiView, this);
         }
+
 
         public void Detach()
         {
-            _viewDictionary.Remove(_view);
+            _viewDictionary.Remove(_uiView);
         }
         
         
@@ -53,7 +50,8 @@ namespace Pressed.iOS.Effects
             }
 
             // Save the setting of the Capture property
-            _capture = _touchEffect.Capture;
+            // note: this will eventually be _formsView.TrackBoundaryChanges
+            _constrainToView = !Pressed.VisualElement.GetTrackBoundaryChanges(_formsView);
         }
 
         public override void TouchesMoved(NSSet touches, UIEvent evt)
@@ -64,7 +62,7 @@ namespace Pressed.iOS.Effects
             {
                 var id = touch.Handle.ToInt64();
 
-                if (_capture)
+                if (_constrainToView)
                 {
                     RaiseEvent(this, id, TouchState.Changed, touch, true);
                 }
@@ -88,7 +86,7 @@ namespace Pressed.iOS.Effects
             {
                 long id = touch.Handle.ToInt64();
 
-                if (_capture)
+                if (_constrainToView)
                 {
                     RaiseEvent(this, id, TouchState.Released, touch, false);
                 }
@@ -114,7 +112,7 @@ namespace Pressed.iOS.Effects
             {
                 long id = touch.Handle.ToInt64();
 
-                if (_capture)
+                if (_constrainToView)
                 {
                     RaiseEvent(this, id, TouchState.Cancelled, touch, false);
                 }
@@ -167,10 +165,9 @@ namespace Pressed.iOS.Effects
             var xfPoint = new Point(cgPoint.X, cgPoint.Y);
 
             // Get the method to call for firing events
-            Action<View, TouchEventArgs> onTouchAction = recognizer._touchEffect.RaiseTouchAction;
-
-            // Call that method
-            onTouchAction(recognizer._element, new TouchEventArgs(actionType, xfPoint, id, isInContact));
+            // note: this would live on the VisualElement and not in an effect :)
+            var effect = recognizer._formsView.Effects.FirstOrDefault(x => x.Is<TouchEffect>()) as TouchEffect;
+            effect?.SendTouched(recognizer._formsView, new TouchEventArgs(actionType, xfPoint, id, isInContact));
         }
     }
 }

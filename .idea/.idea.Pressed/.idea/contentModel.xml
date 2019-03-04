@@ -51,7 +51,7 @@
           <e p="TouchEventArgs.cs" t="Include" />
           <e p="TouchGestureRecognizer.cs" t="Include" />
           <e p="TouchState.cs" t="Include" />
-          <e p="View.cs" t="Include" />
+          <e p="VisualElement.cs" t="Include" />
         </e>
         <e p="Pressed.csproj" t="IncludeRecursive" />
       </e>

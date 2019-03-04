@@ -6,7 +6,7 @@ namespace Pressed
     public class MainPageModel
     {
         private Command _tappedCommand;
-        public Command TappedCommand => _tappedCommand ?? (_tappedCommand = new Command(OnTappedCommand));
+        public Command OnTouchedCommand => _tappedCommand ?? (_tappedCommand = new Command(OnTappedCommand));
 
         private void OnTappedCommand(object obj)
         {

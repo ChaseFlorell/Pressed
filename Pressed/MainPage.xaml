@@ -44,7 +44,7 @@
                 <Setter Property="BackgroundColor" Value="White" />
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="VerticalOptions" Value="Start" />
-                <Setter Property="pressed:View.ObservesTouches" Value="True" />
+                <Setter Property="pressed:VisualElement.ObservesTouches" Value="True" />
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList x:Key="TouchStates">
                         
@@ -95,8 +95,8 @@
         <FlexLayout Style="{StaticResource Flex}">
 
             <Grid Style="{StaticResource Grid}">
-                <Frame pressed:View.TouchEventCommand="{Binding TappedCommand}"
-                       pressed:View.TrackBoundaryChanges="True"
+                <Frame pressed:VisualElement.TouchEventCommand="{Binding OnTouchedCommand}"
+                       pressed:VisualElement.TrackBoundaryChanges="True"
                        Style="{StaticResource Touchable}">
                     <Label Text="Welcome to Xamarin.Forms!" Style="{StaticResource TextStyle}" />
                 </Frame>
@@ -124,15 +124,39 @@
             </Grid>
 
             <Grid Style="{StaticResource Grid}">
-                <Frame pressed:View.ObservesTouches="False"
+                <Frame pressed:VisualElement.ObservesTouches="False"
                        Style="{StaticResource Touchable}">
                     <Label Style="{StaticResource TextStyle}">
                         <Label.Text>
-                            Welcome to Xamarin.Forms!
-                            No Touch
+Welcome to Xamarin.Forms!
+No Touch
                         </Label.Text>
                     </Label>
                 </Frame>
+            </Grid>
+            
+            <Grid Style="{StaticResource Grid}"
+                  BackgroundColor="White"
+                  HorizontalOptions="Center"
+                  VerticalOptions="Center"
+                  WidthRequest="400"
+                  HeightRequest="200">
+                <!-- we could just as easily use the attached property -->
+                <!-- but this shows how we can do the same thing with a gesture recognizer -->
+                <!-- also, if this lands in Xamarin.Forms, there's no need for the Effect-->
+                <Grid.Effects>
+                    <pressed:TouchEffect Touched="TouchGestureRecognizer_OnTouched" />
+                </Grid.Effects>
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
+                    <pressed:TouchGestureRecognizer Command="{Binding OnTouchedCommand}" />
+                </Grid.GestureRecognizers>
+                <Label x:Name="InnerLabel" Style="{StaticResource TextStyle}">
+                    <Label.Text>
+Welcome to Xamarin.Forms!
+I Rotate!
+                    </Label.Text>
+                </Label>
             </Grid>
 
         </FlexLayout>
