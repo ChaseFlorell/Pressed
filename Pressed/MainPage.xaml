@@ -44,6 +44,8 @@
                 <Setter Property="BackgroundColor" Value="White" />
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="VerticalOptions" Value="Start" />
+                
+                <!-- Observe touches on all Touchable Frames by default-->
                 <Setter Property="pressed:VisualElement.ObservesTouches" Value="True" />
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList x:Key="TouchStates">
@@ -59,6 +61,7 @@
                             
                         </VisualStateGroup>
                         
+                        <!-- additional states to observe (note: not sure the purpose of the multiple state groups) -->
                         <VisualStateGroup x:Name="PressedStates">
                             
                             <VisualState x:Name="Pressed">
@@ -95,8 +98,8 @@
         <FlexLayout Style="{StaticResource Flex}">
 
             <Grid Style="{StaticResource Grid}">
-                <Frame pressed:VisualElement.TouchEventCommand="{Binding OnTouchedCommand}"
-                       pressed:VisualElement.TrackBoundaryChanges="True"
+                <!-- track touches outside this element - other elements will also recognize their touch events-->
+                <Frame pressed:VisualElement.TrackBoundaryChanges="True"
                        Style="{StaticResource Touchable}">
                     <Label Text="Welcome to Xamarin.Forms!" Style="{StaticResource TextStyle}" />
                 </Frame>
@@ -124,6 +127,7 @@
             </Grid>
 
             <Grid Style="{StaticResource Grid}">
+                <!-- disable touch observation for this particular element-->
                 <Frame pressed:VisualElement.ObservesTouches="False"
                        Style="{StaticResource Touchable}">
                     <Label Style="{StaticResource TextStyle}">
@@ -141,7 +145,7 @@ No Touch
                   VerticalOptions="Center"
                   WidthRequest="400"
                   HeightRequest="200">
-                <!-- we could just as easily use the attached property -->
+                <!-- we could just as easily use the VisualElement.ObservesTouches property -->
                 <!-- but this shows how we can do the same thing with a gesture recognizer -->
                 <!-- also, if this lands in Xamarin.Forms, there's no need for the Effect-->
                 <Grid.Effects>
@@ -149,6 +153,7 @@ No Touch
                 </Grid.Effects>
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
+                    <!-- adding this gesture recognizer would automatically toggle "VisualElement.ObservesTouches = true" for the View -->
                     <pressed:TouchGestureRecognizer Command="{Binding OnTouchedCommand}" />
                 </Grid.GestureRecognizers>
                 <Label x:Name="InnerLabel" Style="{StaticResource TextStyle}">

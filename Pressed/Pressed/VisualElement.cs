@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Windows.Input;
 using Pressed.Pressed.Extensions;
 using Xamarin.Forms;
 
@@ -11,7 +10,6 @@ namespace Pressed.Pressed
 // ReSharper disable InconsistentNaming
 #pragma warning disable 649
         private static string ObservesTouches;
-        private static string TouchEventCommand;
         private static string TrackBoundaryChanges;
 #pragma warning restore 649
 // ReSharper restore InconsistentNaming
@@ -20,11 +18,6 @@ namespace Pressed.Pressed
             typeof(bool),
             typeof(Xamarin.Forms.VisualElement),
             default(bool), propertyChanged: OnObservesTouchesPropertyChanged);
-        
-        public static readonly BindableProperty TouchEventCommandProperty = BindableProperty.Create(nameof(TouchEventCommand),
-            typeof(ICommand),
-            typeof(Xamarin.Forms.VisualElement),
-            default(ICommand));
 
         public static readonly BindableProperty TrackBoundaryChangesProperty = BindableProperty.Create(nameof(TrackBoundaryChanges),
             typeof(bool),
@@ -33,8 +26,6 @@ namespace Pressed.Pressed
         
         public static bool GetTrackBoundaryChanges(Xamarin.Forms.VisualElement view) => (bool) view.GetValue(TrackBoundaryChangesProperty);
         public static void SetTrackBoundaryChanges(Xamarin.Forms.VisualElement view, bool value) => view.SetValue(TrackBoundaryChangesProperty, value);
-        public static ICommand GetTouchEventCommand(Xamarin.Forms.VisualElement view) => (ICommand) view.GetValue(TouchEventCommandProperty);
-        public static void SetTouchEventCommand(Xamarin.Forms.VisualElement view, ICommand value) => view.SetValue(TouchEventCommandProperty, value);
         public static bool GetObservesTouches(Xamarin.Forms.VisualElement view) => (bool) view.GetValue(ObservesTouchesProperty);
         public static void SetObservesTouches(Xamarin.Forms.VisualElement view, bool value) => view.SetValue(ObservesTouchesProperty, value);
 
