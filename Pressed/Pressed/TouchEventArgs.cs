@@ -14,6 +14,8 @@ namespace Pressed.Pressed
         }
         
         public TouchState TouchState { get; }
+        
+        // to line up with the comment on "TouchState", we could make this enumerable and the count would indicate the number of fingers touching
         public Point Point { get; }
         public long Id { get; }
         public bool IsInContact { get; }

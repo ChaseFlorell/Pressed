@@ -13,6 +13,6 @@ namespace Pressed.Pressed
         Pressed = 1<<6, 
         Released = 1<<7,
         Hover = 1<<8,
-        MultiPressed = 1<<9
+        MultiPressed = 1<<9 // do we want MultiPressed, or do we simply want to track number of fingers by having the "Point" property be a collection?
     }
 }
