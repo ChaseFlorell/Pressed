@@ -57,8 +57,7 @@ public enum TouchState
     Changed = 1<<5,
     Pressed = 1<<6, 
     Released = 1<<7,
-    Hover = 1<<8,
-    MultiPressed = 1<<9
+    Hover = 1<<8
 }
 ```
 
@@ -67,10 +66,16 @@ New TouchEventArgs
 public class TouchEventArgs : EventArgs
 {   
     public TouchState TouchState { get; }
-    public IReadOnlyList<Point> TouchPoints { get; }
+    public IReadOnlyList<TouchPoint> TouchPoints { get; }
     public long Id { get; }
     public bool IsInContact { get; }
 }
+```
+
+New TouchPoints
+```csharp
+public Xamarin.Forms.Point Point { get; }
+public bool IsInOriginalView { get; }
 ```
 
 Additional States
@@ -84,7 +89,6 @@ Additional States
     <VisualState x:Name="Pressed" />
     <VisualState x:Name="Released" />
     <VisualState x:Name="Hover" />
-    <VisualState x:Name="MultiPressed" /> 
 </VisualStateGroup>
 ```
 
