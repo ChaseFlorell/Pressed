@@ -72,10 +72,13 @@ public class TouchEventArgs : EventArgs
 }
 ```
 
-New TouchPoints
+New TouchPoint
 ```csharp
-public Xamarin.Forms.Point Point { get; }
-public bool IsInOriginalView { get; }
+public struct TouchPoint
+{
+    public Xamarin.Forms.Point Point { get; }
+    public bool IsInOriginalView { get; }
+}
 ```
 
 Additional States
