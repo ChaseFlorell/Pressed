@@ -1,5 +1,7 @@
 SPEC
 
+_Currently only iOS is functioning_
+
 Extend View
 ```csharp
 public class View
