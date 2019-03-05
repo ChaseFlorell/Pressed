@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using Pressed.Pressed.Extensions;
 using Xamarin.Forms;
@@ -17,7 +18,7 @@ namespace Pressed.Pressed
         [EditorBrowsable(EditorBrowsableState.Never)]
         public void SendTouched(Xamarin.Forms.VisualElement visualElement, TouchEventArgs args)
         {
-            System.Diagnostics.Debug.WriteLine($"Tracked as {args.TouchState} at point {args.Point.X}:{args.Point.Y}.");
+            Debug.WriteLine($"State {args.TouchState} on {visualElement.GetHashCode()} with {args.TouchPoints.Count} Fingers" );
             VisualStateManager.GoToState(visualElement, args.TouchState.ToString());
             Touched?.Invoke(visualElement, args);
             

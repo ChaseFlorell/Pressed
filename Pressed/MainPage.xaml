@@ -72,6 +72,14 @@
                                 </VisualState.Setters>
                             </VisualState>
                             
+                            <VisualState x:Name="MultiPressed">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="Pink" />
+                                    <Setter Property="Scale" Value="0.9" />
+                                    <Setter Property="Rotation" Value="5"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            
                             <VisualState x:Name="Released">
                                 <VisualState.Setters>
                                     <Setter Property="BackgroundColor" Value="White" />
